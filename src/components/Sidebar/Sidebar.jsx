@@ -1,6 +1,7 @@
 import "./Sidebar.css";
 import { assets } from "../../assets/assets"; // assets 폴더의 이미지 관리 assets.js
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 // Gemini Sidebar Components
 export const Sidebar = () => {
@@ -9,7 +10,13 @@ export const Sidebar = () => {
   // 최상단 div는 상단과 하단이 될 두개의 div를 만들것
   // top -> 상단 메뉴 = menu, new-chat, recent
   return (
-    <div className="sidebar">
+    // 상태에 따라 사이드바의 너비를 조정하여 애니메이션을 적용
+    <motion.div
+      className="sidebar"
+      initial={{ width: "90px" }} // 초기 width 90px
+      animate={{ width: extended ? "280px" : "90px" }} //extended 상태에 따라 사이드바의 너비를 조정하여 애니메이션을 적용
+      exit={{ width: "30px" }} // 언마운트시 width 30px
+    >
       <div className="top">
         <img
           onClick={() => setExtended((prev) => !prev)} // 함수의 이전 값의 반대를 반환 (false -> true)
@@ -47,6 +54,6 @@ export const Sidebar = () => {
           {extended ? <p>설정</p> : null}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
