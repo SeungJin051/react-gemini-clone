@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box; /* width 값은 '콘텐츠 크기 + 좌우 padding 값 + 좌우 border 값'으로 계산 */
+  font-family: Outfit;
 }
 
 #root {
