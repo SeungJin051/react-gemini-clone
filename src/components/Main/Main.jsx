@@ -67,6 +67,7 @@ export const Main = () => {
                 <div className="loader">
                   <hr />
                   <hr />
+                  <hr />
                 </div>
               ) : (
                 // 동적으로 렌더링하는 방법을 보여줍니다. 구체적으로 `dangerouslySetInnerHTML` 속성은 이름에서 알 수 있듯이 잠재적인 위험성을 내포하고 있어 주의가 필요합니다.
