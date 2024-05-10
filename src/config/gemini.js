@@ -50,7 +50,7 @@ async function runChat(prompt) {
   const response = result.response;
   console.log(response.text());
   // 응답 결과 텍스트 반환
-  return response.text;
+  return response.text();
 }
 
 runChat();
