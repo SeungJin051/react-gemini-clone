@@ -24,6 +24,9 @@ const ContextProvider = (props) => {
   // 결과 보여주기
   const [resultData, setResultData] = useState("");
 
+  // 타이핑시 효과 로직 (입력 필드에 대한 AI 값을 받은 데이터 텍스트)
+  const delayPara = (index, nextWord) => {};
+
   // API 통신 로직
   const onSend = async (prompt) => {
     setResultData("");
@@ -32,7 +35,22 @@ const ContextProvider = (props) => {
     setRecentPrompt(input);
     // input 값이 response에 저장
     const response = await runChat(input);
-    setResultData(response);
+    console.log(typeof response); // Log the type of response
+
+    // ** 제거
+    let resArray = response.split("**");
+    let newRes;
+    // ** 제거
+    for (let i = 0; i < resArray.length; i++) {
+      if (i === 0 || i % 2 !== 1) {
+        newRes += resArray[i];
+      } else {
+        // ** -> bold 처리
+        newRes += "<b>" + resArray[i] + "</b>";
+      }
+    }
+
+    setResultData(newRes);
     setLoading(false);
     setInput("");
   };
