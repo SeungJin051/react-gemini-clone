@@ -1,12 +1,18 @@
 import "./Sidebar.css";
 import { assets } from "../../assets/assets"; // assets 폴더의 이미지 관리 assets.js
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { motion } from "framer-motion";
+import { Context } from "../../context/Context";
 
 // Gemini Sidebar Components
 export const Sidebar = () => {
   const [extended, setExtended] = useState(false);
+  const { onSend, prevPrompts, setRecentPrompt } = useContext(Context); // context api로 가져옴
 
+  const loadPrompt = async (prompt) => {
+    setRecentPrompt(prompt);
+    await onSend(prompt);
+  };
   // 최상단 div는 상단과 하단이 될 두개의 div를 만들것
   // top -> 상단 메뉴 = menu, new-chat, recent
   return (
@@ -32,10 +38,23 @@ export const Sidebar = () => {
         {extended ? (
           <div className="recent">
             <p className="recent-title">최근</p>
-            <div className="recent-entry">
-              <img src={assets.message_icon} alt="message_icon" />
-              <p>GPT-4 대 제미니</p>
-            </div>
+            {prevPrompts && prevPrompts.length > 0
+              ? prevPrompts.map((item, index) => {
+                  return (
+                    <div
+                      onClick={() => {
+                        loadPrompt(item);
+                      }}
+                      className="recent-entry"
+                      key={index}
+                    >
+                      <img src={assets.message_icon} alt="message_icon" />
+                      {/* 값이 길면 넘쳐서 자르기~ */}
+                      <p>{item.slice(0, 18)} ...</p>
+                    </div>
+                  );
+                })
+              : null}
           </div>
         ) : null}
       </div>

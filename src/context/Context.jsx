@@ -13,7 +13,7 @@ const ContextProvider = (props) => {
   const [recentPrompt, setRecentPrompt] = useState("");
 
   // 과거의 State input 로그, 사이드 바 추가
-  const [prevPrompt, setPrevPrompts] = useState([]);
+  const [prevPrompts, setPrevPrompts] = useState([]); // 아오 !
 
   // 보여주는 State 초기 채팅 디스플레이를 숨김
   const [showResult, setShowResult] = useState(false);
@@ -36,9 +36,18 @@ const ContextProvider = (props) => {
     setResultData("");
     setLoading(true);
     setShowResult(true);
-    setRecentPrompt(input);
-    // input 값이 response에 저장
-    const response = await runChat(input);
+    let response;
+    if (prompt !== undefined) {
+      // 최근 항목 클릭시 작동
+      response = await runChat(prompt);
+      setRecentPrompt(prompt);
+    } else {
+      // 입력 필드 실행할 때 명령문 실행
+      setPrevPrompts((prev) => [...prev, input]);
+      setRecentPrompt(input);
+      response = await runChat(input);
+    }
+
     console.log(typeof response); // Log the type of response
 
     // ** 제거
@@ -72,7 +81,7 @@ const ContextProvider = (props) => {
     // 문자열을 배열로 분할하여 각각의 단어를 적절한 딜레이와 함께 표시
     let newRes2 = newRes.split("*").join("</br>");
 
-    // ## 정규 표ㅕ현식으로 제거
+    // ## 정규 표현식으로 제거
     newRes2 = newRes2.replace(/##/g);
     let newResArray = newRes2.split(" ");
     for (let i = 0; i < newResArray.length; i++) {
@@ -84,7 +93,7 @@ const ContextProvider = (props) => {
   };
 
   const contextValue = {
-    prevPrompt,
+    prevPrompts,
     setPrevPrompts,
     onSend,
     setRecentPrompt,
