@@ -6,10 +6,7 @@ import { Context } from "../../context/Context";
 export const Main = () => {
   // Context API로 상태와 함수를 가져옴
   const {
-    prevPrompt,
-    setPrevPrompts,
     onSend,
-    setRecentPrompt,
     recentPrompt,
     showResult,
     loading,
