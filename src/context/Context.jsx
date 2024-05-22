@@ -31,6 +31,11 @@ const ContextProvider = (props) => {
     }, 75 * index);
   };
 
+  const newChat = () => {
+    setLoading(false);
+    setShowResult(false);
+  };
+
   // API 통신 로직
   const onSend = async (prompt) => {
     setResultData("");
@@ -103,6 +108,7 @@ const ContextProvider = (props) => {
     resultData,
     input,
     setInput,
+    newChat,
   };
 
   return (
