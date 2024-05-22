@@ -7,7 +7,7 @@ import { Context } from "../../context/Context";
 // Gemini Sidebar Components
 export const Sidebar = () => {
   const [extended, setExtended] = useState(false);
-  const { onSend, prevPrompts, setRecentPrompt } = useContext(Context); // context api로 가져옴
+  const { onSend, prevPrompts, setRecentPrompt, newChat } = useContext(Context); // context api로 가져옴
 
   const loadPrompt = async (prompt) => {
     setRecentPrompt(prompt);
@@ -30,7 +30,7 @@ export const Sidebar = () => {
           src={assets.menu_icon}
           alt="menu_icon"
         />
-        <div className="new-chat">
+        <div onClick={() => newChat()} className="new-chat">
           <img src={assets.plus_icon} alt="plus_icon" />
           {/* sidebar의 상태에 따라 조건문을 통해 보이고 안보이고를 설정 */}
           {extended ? <p>새 채팅</p> : null}
